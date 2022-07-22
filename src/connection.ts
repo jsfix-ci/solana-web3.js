@@ -1020,7 +1020,9 @@ function createRpcClient(
           break;
         }
         console.log(
-          `Server responded with ${res.status} ${res.statusText}.  Retrying after ${waitTime}ms delay...`,
+          `Server responded with ${res.status} ${/* TODO: JSFIX could not patch the breaking change:
+          Response.statusText no longer sets a default message derived from the HTTP status code*/
+          res.statusText}.  Retrying after ${waitTime}ms delay...`,
         );
         await sleep(waitTime);
         waitTime *= 2;
@@ -1030,7 +1032,9 @@ function createRpcClient(
       if (res.ok) {
         callback(null, text);
       } else {
-        callback(new Error(`${res.status} ${res.statusText}: ${text}`));
+        callback(new Error(`${res.status} ${/* TODO: JSFIX could not patch the breaking change:
+        Response.statusText no longer sets a default message derived from the HTTP status code*/
+        res.statusText}: ${text}`));
       }
     } catch (err) {
       if (err instanceof Error) callback(err);
